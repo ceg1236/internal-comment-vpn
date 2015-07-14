@@ -4,7 +4,10 @@
     events: {
       'app.activated':'created',
       'listOrgUsers.done':'listOrgUsersDone',
-      'click .initiate':'initiateVpn'
+      'updateTicket.done':'updateTicketDone',
+      'click .initiate':'initiateVpn',
+      'click .submit':'submitInternalComment',
+
     },
 
     requests: {
@@ -12,6 +15,17 @@
         return {
           url: helpers.fmt('/api/v2/organizations/%@/users.json', id),
           type: 'GET'
+        }
+      },
+
+      updateTicket: function(ticketData) {
+        return {
+          url: helpers.fmt('/api/v2/tickets/%@.json', ticketData.ticketId),
+          type:'PUT',
+          dataType:'json',
+          data: {"ticket": {"comment":{ "body": ticketData.comment,"public":false} } },
+          success: function(data) {console.log('yay!', data)},
+          error:function(err){console.err(': (', err)}
         }
       }
     },
@@ -36,13 +50,36 @@
 
     initiateVpn: function() {
       var currentUser = this.$('.users :selected').text();
-      var reason = this.$('.reason').val();
+      var reason = this.$('.reason-before').val();
       var organizationName = this.ticket().organization().name();
       organizationName = organizationName.replace(/\s/g, "");
       var time = new Date();
 
 
-      this.switchTo('after', {currentUser: currentUser, reason: reason, time:time, organizationName:organizationName})
+      this.switchTo('after', {currentUser: currentUser, reason: reason, time:time, organizationName:organizationName});
+
+    },
+
+    submitInternalComment: function() {
+
+      var ticketData = {};
+      var currentUser = this.$('#current-user').text();
+      var reason = this.$('#reason-after').text();
+      var time_in = this.$('#time-in').text();
+      var time_out = this.$('.time-out').val();
+      var action = this.$('.action').val();
+      var vpnUrl = this.$('.vpn-url').text();
+
+
+      ticketData.ticketId = this.ticket().id();
+
+      ticketData.comment = 'User: ' + currentUser + '\n' + 'Reason: ' + reason + '\n' + 'Time-in: ' + time_in + '\n' + 'Time out: ' + time_out + '\n' + 'Action: ' + action + '\n' + 'URL: ' + vpnUrl
+
+      this.ajax('updateTicket', ticketData);
+    },
+
+    updateTicketDone:function(data) {
+      console.log('ticket done ', data);
     }
   };
 

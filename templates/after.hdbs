@@ -1,14 +1,13 @@
 <div class="info">
-  <h4>User:</h4><p>{{currentUser}}</p>
-  <h4>Reason:</h4><p>{{reason}}</p>
-  <h4>Time In:</h4><p>{{time}}</p>
-  <h4>URL:</h4><a href="">https://vpn.{{organizationName}}.com</a>
+  <h4>User:</h4><p id="current-user">{{currentUser}}</p>
+  <h4>Reason:</h4><p id="reason-after">{{reason}}</p>
+  <h4>Time In:</h4><p id="time-in">{{time}}</p>
+  <h4>URL:</h4><a class="vpn-url" href="">https://vpn.{{organizationName}}.com</a>
 </div>
 
 <div class="after-options">
   <h4>Time out:</h4><input type="text" class="time-out">
   <h4>Action taken:</h4><input type="text" class="action">
-
 
 </div>
   <button class="submit btn">Submit</button>
