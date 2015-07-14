@@ -15,7 +15,7 @@
         return {
           url: helpers.fmt('/api/v2/organizations/%@/users.json', id),
           type: 'GET'
-        }
+        };
       },
 
       updateTicket: function(ticketData) {
@@ -24,14 +24,14 @@
           type:'PUT',
           dataType:'json',
           data: {"ticket": {"comment":{ "body": ticketData.comment,"public":false} } },
-          success: function(data) {console.log('yay!', data)},
-          error:function(err){console.err(': (', err)}
-        }
+          success: function(data) {console.log('yay!', data);},
+          error:function(err){console.err(': (', err);}
+        };
       }
     },
 
     created: function() {
-      var orgId = this.ticket().organization().id()
+      var orgId = this.ticket().organization().id();
       this.ajax('listOrgUsers', orgId);
     },
 
@@ -45,7 +45,7 @@
         i++;
       });
 
-      this.switchTo('before', users)
+      this.switchTo('before', users);
     },
 
     initiateVpn: function() {
@@ -66,20 +66,20 @@
       var currentUser = this.$('#current-user').text();
       var reason = this.$('#reason-after').text();
       var time_in = this.$('#time-in').text();
-      var time_out = this.$('.time-out').val();
+      var time_out = new Date();
       var action = this.$('.action').val();
       var vpnUrl = this.$('.vpn-url').text();
 
 
       ticketData.ticketId = this.ticket().id();
 
-      ticketData.comment = 'User: ' + currentUser + '\n' + 'Reason: ' + reason + '\n' + 'Time-in: ' + time_in + '\n' + 'Time out: ' + time_out + '\n' + 'Action: ' + action + '\n' + 'URL: ' + vpnUrl
+      ticketData.comment = 'User: ' + currentUser + '\n' + 'Reason: ' + reason + '\n' + 'Time-in: ' + time_in + '\n' + 'Time out: ' + time_out + '\n' + 'Action: ' + action + '\n' + 'URL: ' + vpnUrl;
 
       this.ajax('updateTicket', ticketData);
     },
 
     updateTicketDone:function(data) {
-      console.log('ticket done ', data);
+      this.created();
     }
   };
 
