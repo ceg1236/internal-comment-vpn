@@ -1,0 +1,20 @@
+
+<h2>Before</h2>
+<div class="users-container">
+  <h4>User</h4>
+  <select class="users dropdown" id="activity">
+    {{#each names}}  
+    <option value="{{value}}">{{this}}</option>
+    {{/each}}
+  </select>
+</div>
+
+<div class="reason-container">
+  <h4>Reason</h4>
+  <textarea class="reason"></textarea>
+</div>
+
+<div class="initiate-container">
+  <button class="initiate btn">Initiate VPN</button>
+</div>
+
